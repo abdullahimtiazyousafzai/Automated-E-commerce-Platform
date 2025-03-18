@@ -76,4 +76,4 @@ aws ec2 wait image-available --image-ids $ami_id --region $REGION
 aws ec2 terminate-instances --instance-ids $instance_id --region $REGION
 
 echo "✅ AMI created: $ami_id"
-echo $ami_id > ami-id.txt
+echo $ami_id > scripts/ami-id.txt
