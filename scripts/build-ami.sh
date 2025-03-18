@@ -12,7 +12,7 @@ AMI_NAME="payment-api-ami"
 sg_id=$(aws ec2 create-security-group \
   --group-name $SECURITY_GROUP_NAME \
   --description "SG for AMI builder" \
-  --vpc-id $(aws ec2 describe-vpcs --filters Name=cidr,Values=10.0.0.0/16 --query "Vpcs[0].VpcId" --output text) \
+  --vpc-id $(aws ec2 describe-vpcs --filters Name=isDefault,Values=true --query "Vpcs[0].VpcId" --output text)\
   --region $REGION \
   --output text)
 
