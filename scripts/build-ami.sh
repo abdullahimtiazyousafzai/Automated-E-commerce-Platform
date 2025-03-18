@@ -45,7 +45,7 @@ subnet_id=$(aws ec2 describe-subnets \
   --region $REGION)
 
 instance_id=$(aws ec2 run-instances \
-  --image-id ami-0c02fb55956c7d316 \  # Amazon Linux 2
+  --image-id ami-0c02fb55956c7d316 \
   --count 1 \
   --instance-type $INSTANCE_TYPE \
   --key-name $KEY_NAME \
@@ -56,6 +56,7 @@ instance_id=$(aws ec2 run-instances \
   --region $REGION \
   --query "Instances[0].InstanceId" \
   --output text)
+
 
 echo "⏳ Waiting for instance $instance_id to initialize..."
 aws ec2 wait instance-status-ok --instance-ids $instance_id --region $REGION
