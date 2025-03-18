@@ -47,8 +47,9 @@ aws ec2 associate-route-table --route-table-id $rtb_priv_a --subnet-id $subnet_p
 aws ec2 associate-route-table --route-table-id $rtb_priv_b --subnet-id $subnet_priv_b
 
 # Security Groups
-sg_alb=$(aws ec2 create-security-group --group-name sg-alb --description "ALB SG" --vpc-id $vpc_id --query 'GroupId' --output text)
-sg_app=$(aws ec2 create-security-group --group-name sg-payment-api --description "App SG" --vpc-id $vpc_id --query 'GroupId' --output text)
+sg_alb=$(aws ec2 create-security-group --group-name alb-sg --description "ALB SG" --vpc-id $vpc_id --query 'GroupId' --output text)
+sg_app=$(aws ec2 create-security-group --group-name payment-api-sg --description "App SG" --vpc-id $vpc_id --query 'GroupId' --output text)
+
 
 aws ec2 authorize-security-group-ingress --group-id $sg_alb --protocol tcp --port 80 --cidr 0.0.0.0/0
 aws ec2 authorize-security-group-ingress --group-id $sg_app --protocol tcp --port 80 --source-group $sg_alb
