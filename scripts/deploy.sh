@@ -52,9 +52,15 @@ sg_app=$(aws ec2 create-security-group --group-name payment-api-sg --description
 
 
 aws ec2 authorize-security-group-ingress --group-id $sg_alb --protocol tcp --port 80 --cidr 0.0.0.0/0
-aws ec2 authorize-security-group-ingress --group-id $sg_app --protocol tcp --port 80 --source-group $sg_alb
+# Allow sg-alb to access sg-app on port 80
+aws ec2 authorize-security-group-ingress \
+  --group-id $sg_app \
+  --protocol tcp \
+  --port 80 \
+  --source-group $sg_alb
 
-aws ec2 authorize-security-group-egress --group-id $sg_alb --protocol tcp --port 80 --destination-group $sg_app
+
+aws ec2 authorize-security-group-egress --group-id $sg_alb --protocol tcp --port 80 --cidr 10.0.0.0/16
 aws ec2 authorize-security-group-egress --group-id $sg_app --protocol -1 --cidr 0.0.0.0/0
 
 # Launch EC2 Instances
